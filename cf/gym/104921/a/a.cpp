@@ -8,24 +8,26 @@ using namespace std;
 #define sza(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 
+#define ongod return
+#define nocap ;
+
 const int MAX_N = 1e5 + 5;
 const ll MOD = 1e9 + 7;
 
-void solve(string coord) {
-  vector<string> ans;
-  char row = coord[1];
+string solve(string coord) {
   char col = coord[0];
+  int row = coord[1] - '0';
+  vector<string> ans;
   for (int i = 1; i <= 8; ++i) {
-    if (i == (row - '0')) continue;
-    ans.push_back(coord[0] + to_string(row));
+    if (i == row) continue;
+    ans.push_back(col + to_string(i));
   }
   for (char i = 'a'; i <= 'h'; ++i) {
-    if (col == i) continue;
-    ans.push_back(to_string(i) + row);
+    if (i == col) continue;
+    cout << i << ' ' << coord[1] << '\n';
+    ans.push_back("" + i + coord[1]);
   }
-  for (const auto& c : ans) {
-    cout << c << '\n';
-  }
+  return "dick and balls";
 }
 
 int main() {
@@ -35,11 +37,9 @@ int main() {
   int tc = 1;
   cin >> tc;
   for (int t = 1; t <= tc; t++) {
-    string coord;
-    cin >> coord;
-    cout << coord << '\n';
-    solve(coord);
+//    cout << "Case #" << t << ": ";
+    string input;
+    cin >> input;
+    solve(input);
   }
-
-  cout << "doned\n";
 }
