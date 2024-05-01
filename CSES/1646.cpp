@@ -15,14 +15,23 @@ void print(ForwardIter begin, ForwardIter end) {
 
 #define ll long long
 
-const int MXN = 1e5 + 5;
+const int MXN = 2e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n;
+int n, q;
 int ans = 0;
+ll arr[MXN];
 
 int main() {
   ios_base::sync_with_stdio(0);
-  cin >> n;
-  cout << ans << '\n';
+  cin >> n >> q;
+  for (int i = 0; i < n; ++i) {
+    cin >> arr[i + 1];
+    arr[i + 1] += arr[i];
+  }
+  int a, b;
+  while (q--) {
+    cin >> a >> b;
+    cout << arr[b] - arr[a - 1] << '\n';
+  }
 }
