@@ -14,14 +14,21 @@ void print(ForwardIter begin, ForwardIter end) {
 
 #define ll long long
 
-const int MXN = 1e5 + 5;
+const int MXN = 1e6 + 5;
 const int MOD = 1e9 + 7;
 
 int ans = 0;
+int dp[MXN];
 
 int main() {
   ios_base::sync_with_stdio(0);
   int n;
   cin >> n;
-  cout << ans << '\n';
+  dp[0] = 1;
+  for (int i = 0; i <= n; ++i) {
+    for (int j = max(0, i - 6); j < i; ++j) {
+      dp[i] = (dp[i] + dp[j]) % MOD;
+    }
+  }
+  cout << dp[n] << '\n';
 }
