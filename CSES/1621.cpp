@@ -21,6 +21,12 @@ int ans = 0;
 
 int main() {
   ios_base::sync_with_stdio(0);
-  int n;
+  int n, x;
   cin >> n;
+  set<int> seen;
+  while (n--) {
+    cin >> x;
+    seen.insert(x);
+  }
+  cout << seen.size() << '\n';
 }
