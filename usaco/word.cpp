@@ -23,17 +23,30 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int bi, bf, si, sf, gi, gf, pi, pf;
-int ans = 0;
+int n, k;
+string s;
 
 int main() {
-  setIO("promote");
+  setIO("word");
   ios_base::sync_with_stdio(0);
-  cin >> bi >> bf;
-  cin >> si >> sf;
-  cin >> gi >> gf;
-  cin >> pi >> pf;
-  cout << sf + gf + pf - si - gi - pi << '\n'
-       << gf + pf - gi - pi << '\n'
-       << pf - pi << '\n';
+  cin >> n >> k;
+  vector<string> words(n);
+  for (int i = 0; i < n; ++i) {
+    cin >> words[i];
+  }
+  int i = 0, sz = 0;
+  while (i < n) {
+    if (sz + (int)words[i].size() > k) {
+      s.pop_back();
+      cout << s << '\n';
+      s = "";
+      sz = 0;
+    } else {
+      s += words[i] + ' ';
+      sz += words[i].size();
+      ++i;
+    }
+  }
+  while (s.back() == ' ') s.pop_back();
+  cout << s;
 }

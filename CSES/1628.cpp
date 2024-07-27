@@ -15,23 +15,17 @@ void print(ForwardIter begin, ForwardIter end) {
 
 #define ll long long
 
-const int MXN = 5e3 + 5;
-const int MXK = 5e5 + 5;
+const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n, k, i = 1, dp[MXN];
-string ans;
-
-struct node {
-  int fail, ch[26] = {};
-  vector<int> lens;
-  string s = "";
-} T[MXK];
+int dfs(vector<int> &) {}
 
 int main() {
   ios_base::sync_with_stdio(0);
-  string s;
-  cin >> s;
-  cin >> n;
-  for (int i = 0; i <) cout << ans << '\n';
+  int n, ans, x;
+  vector<int> t;
+  cin >> n >> x;
+  for (int i = 0; i < n; ++i) cin >> t[i];
+}
+cout << ans << '\n';
 }

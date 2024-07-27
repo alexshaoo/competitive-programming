@@ -13,25 +13,23 @@ void print(ForwardIter begin, ForwardIter end) {
   cout << '\n';
 }
 
+void setIO(string s) {
+  freopen((s + ".in").c_str(), "r", stdin);
+  freopen((s + ".out").c_str(), "w", stdout);
+}
+
 #define ll long long
 
-const int MXN = 5e3 + 5;
-const int MXK = 5e5 + 5;
+const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n, k, i = 1, dp[MXN];
-string ans;
-
-struct node {
-  int fail, ch[26] = {};
-  vector<int> lens;
-  string s = "";
-} T[MXK];
+int a, b, x, y;
+int ans = 0;
 
 int main() {
+  setIO("teleport");
   ios_base::sync_with_stdio(0);
-  string s;
-  cin >> s;
-  cin >> n;
-  for (int i = 0; i <) cout << ans << '\n';
+  cin >> a >> b >> x >> y;
+  cout << min({abs(a - b), abs(a - x) + abs(b - y), abs(a - y) + abs(b - x)})
+       << '\n';
 }

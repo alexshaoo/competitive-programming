@@ -13,6 +13,11 @@ void print(ForwardIter begin, ForwardIter end) {
   cout << '\n';
 }
 
+void setIO(string s) {
+  freopen((s + ".in").c_str(), "r", stdin);
+  freopen((s + ".out").c_str(), "w", stdout);
+}
+
 #define ll long long
 
 const int MXN = 1e5 + 5;
@@ -22,6 +27,7 @@ int n;
 int ans = 0;
 
 int main() {
+  setIO("");
   ios_base::sync_with_stdio(0);
   cin >> n;
   cout << ans << '\n';
