@@ -23,25 +23,12 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int x, y;
+int n;
 int ans = 0;
 
 int main() {
-  setIO("lostcow");
+  // setIO("gymnastics");
   ios_base::sync_with_stdio(0);
-  cin >> x >> y;
-  int s = x, e = x + 1;
-  int offset = 1;
-  while (1) {
-    if ((offset > 0 && x < y && x + offset >= y) ||
-        (offset < 0 && x > y && x + offset <= y)) {
-      ans += abs(y - s);
-      break;
-    }
-    ans += abs(e - s);
-    offset *= -2;
-    s = e;
-    e = x + offset;
-  }
+  cin >> n;
   cout << ans << '\n';
 }

@@ -18,14 +18,16 @@ void print(ForwardIter begin, ForwardIter end) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int dfs(vector<int> &) {}
+int dfs(vector<int> &t, int i) { if (i >= t.size()) }
 
 int main() {
   ios_base::sync_with_stdio(0);
   int n, ans, x;
   vector<int> t;
   cin >> n >> x;
-  for (int i = 0; i < n; ++i) cin >> t[i];
-}
-cout << ans << '\n';
+  for (int i = 0; i < n; ++i) {
+    cin >> t[i];
+  }
+
+  cout << ans << '\n';
 }

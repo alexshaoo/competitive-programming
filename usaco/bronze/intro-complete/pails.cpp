@@ -27,7 +27,7 @@ int x, y, m;
 int ans = 0;
 
 int main() {
-  setIO("pails");
+  // setIO("pails");
   ios_base::sync_with_stdio(0);
   cin >> x >> y >> m;
   for (int i = 0; i <= m / x; ++i) {

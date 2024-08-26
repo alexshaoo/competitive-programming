@@ -23,33 +23,18 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n;
+int x, y, m;
 int ans = 0;
-int b = 0;
 
 int main() {
-  setIO("blist");
+  setIO("pails");
   ios_base::sync_with_stdio(0);
-  cin >> n;
-  vector<pair<int, int>> s(n), t(n);
-  for (int i = 0; i < n; ++i) {
-    int ss, tt, b;
-    cin >> ss >> tt >> b;
-    s[i] = {ss, b};
-    t[i] = {tt, b};
-  }
-  sort(s.begin(), s.end());
-  sort(t.begin(), t.end());
-  int curr = 0;
-  int si = 0, ti = 0;
-  for (int i = 1; i <= 1000; ++i) {
-    if (si < n && s[si].first == i) {
-      curr += s[si++].second;
+  cin >> x >> y >> m;
+  for (int i = 0; i <= m / x; ++i) {
+    for (int j = 0; j <= m / y; ++j) {
+      int val = i * x + j * y;
+      if (val <= m) ans = max(ans, val);
     }
-    if (ti < n && t[ti].first == i) {
-      curr -= t[ti++].second;
-    }
-    ans = max(ans, curr);
   }
   cout << ans << '\n';
 }

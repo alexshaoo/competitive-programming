@@ -23,13 +23,9 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int a, b, x, y;
-int ans = 0;
+int n;
 
 int main() {
-  setIO("teleport");
+  // setIO("");
   ios_base::sync_with_stdio(0);
-  cin >> a >> b >> x >> y;
-  cout << min({abs(a - b), abs(a - x) + abs(b - y), abs(a - y) + abs(b - x)})
-       << '\n';
 }
