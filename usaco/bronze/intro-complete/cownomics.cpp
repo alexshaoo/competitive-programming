@@ -23,31 +23,27 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int k, n, ans = 0;
+int n, m, ans = 0;
 
 int main() {
-  setIO("gymnastics");
+  setIO("cownomics");
   ios_base::sync_with_stdio(0);
-  cin >> k >> n;
-  int arr[k][n], ind[k][n];
-  for (int i = 0; i < k; ++i) {
-    for (int j = 0; j < n; ++j) {
+  cin >> n >> m;
+  char arr[2*n][m];
+  for (int i = 0; i < 2*n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cin >> arr[i][j];
-      --arr[i][j];
-      ind[i][arr[i][j]] = j;
     }
   }
-  for (int i = 0; i < n; ++i) {
-    for (int j = i + 1; j < n; ++j) {
-      bool c1 = true, c2 = true;
-      for (int s = 0; s < k; ++s) {
-        int c1p = ind[s][i];
-        int c2p = ind[s][j];
-        if (c1p < c2p) c1 = false;
-        if (c1p > c2p) c2 = false;
-      }
-      ans += c1 || c2;
+  for (int i = 0; i < m; ++i) {
+    set<char> s;
+    bool b = true;
+    for (int j = 0; j < n; ++j) s.insert(arr[j][i]);
+    for (int j = n; j < 2*n; ++j) if (s.find(arr[j][i]) != s.end()) {
+      b = false;
+      break;
     }
+    ans += b;
   }
   cout << ans << '\n';
 }

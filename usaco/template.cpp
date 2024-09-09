@@ -23,7 +23,7 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n;
+int n, ans = 0;
 
 int main() {
   // setIO("");
