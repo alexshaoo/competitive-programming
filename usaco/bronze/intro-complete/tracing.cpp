@@ -45,14 +45,16 @@ int main() {
       string infected(n+1, '0');
       infected[ic] = '1';
       for (const auto& interaction : interactions) {
-        if (infected[interaction[1]] == '1' && infected[interaction[2]] == '1') {
+        char& c1 = infected[interaction[1]];
+        char& c2 = infected[interaction[2]];
+        if (c1 == '1' && c2 == '1') {
           infectionsPassed[interaction[1]]++;
           infectionsPassed[interaction[2]]++;
-        } else if (infectionsPassed[interaction[1]] < k && infected[interaction[1]] == '1' && infected[interaction[2]] == '0') {
-          infected[interaction[2]] = '1';
+        } else if (infectionsPassed[interaction[1]] < k && c1 == '1' && c2 == '0') {
+          c2 = '1';
           infectionsPassed[interaction[1]]++;
-        } else if (infectionsPassed[interaction[2]] < k && infected[interaction[2]] == '1' && infected[interaction[1]] == '0') {
-          infected[interaction[1]] = '1';
+        } else if (infectionsPassed[interaction[2]] < k && c2 == '1' && c1 == '0') {
+          c1 = '1';
           infectionsPassed[interaction[2]]++;
         }
       }
