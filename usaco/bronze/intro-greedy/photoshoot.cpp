@@ -13,11 +13,6 @@ void print(ForwardIter begin, ForwardIter end) {
   cout << '\n';
 }
 
-void setIO(string s) {
-  freopen((s + ".in").c_str(), "r", stdin);
-  freopen((s + ".out").c_str(), "w", stdout);
-}
-
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
@@ -27,7 +22,20 @@ const int MOD = 1e9 + 7;
 int n, ans = 0;
 
 int main() {
-  // setIO("");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> n;
+  string s;
+  cin >> s;
+  char last = ' ';
+  for (int i = 0; i < n; i += 2) {
+    if (s[i] != s[i+1] && s[i] != last) {
+      ++ans;
+      last = s[i];
+    }
+  }
+  if (last == 'H') {
+    --ans;
+  }
+  cout << ans << '\n';
 }

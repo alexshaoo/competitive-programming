@@ -27,7 +27,28 @@ const int MOD = 1e9 + 7;
 int n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("whereami");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> n;
+  string s;
+  cin >> s;
+  int len = 1;
+  while (len < n) {
+    set<string> uniq;
+    bool doable = true;
+    for (int i = 0; i <= n-len; ++i) {
+      string tmp = s.substr(i, len);
+      if (uniq.count(tmp) > 0) {
+        doable = false;
+        break;
+      }
+      uniq.insert(tmp);
+    }
+    if (doable) {
+      break;
+    }
+    ++len;
+  }
+  cout << len << '\n';
 }

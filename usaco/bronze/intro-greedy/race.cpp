@@ -24,10 +24,35 @@ void setIO(string s) {
 const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-int n, ans = 0;
+int k, n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("race");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> k >> n;
+  while (n--) {
+    int x;
+    cin >> x;
+    int speed = 0;
+    int dist = 0;
+    ans = 0;
+    while (1) {
+      ++speed;
+      dist += speed;
+      ++ans;
+      if (dist >= k) {
+        cout << ans << '\n';
+        break;
+      }
+      if (speed >= x) {
+        dist += speed;
+        ++ans;
+        if (dist >= k) {
+          cout << ans << '\n';
+          break;
+        }
+      }
+    }
+  }
 }

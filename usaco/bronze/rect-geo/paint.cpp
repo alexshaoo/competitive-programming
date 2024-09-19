@@ -27,7 +27,10 @@ const int MOD = 1e9 + 7;
 int n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("paint");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  int a, b, c, d;
+  cin >> a >> b >> c >> d;
+  cout << b-a+d-c-max(0, min(b,d)-max(a,c)) << '\n';
 }

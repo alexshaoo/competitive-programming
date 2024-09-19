@@ -27,7 +27,22 @@ const int MOD = 1e9 + 7;
 int n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("factory");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> n;
+  vector<int> arr(n+1);
+  for (int i = 0; i < n-1; ++i) {
+    int u, v;
+    cin >> u >> v;
+    arr[u]++;
+  }
+  int c = 0;
+  for (int i = 1; i <= n; ++i) {
+    if (arr[i] == 0) {
+      ++c;
+      ans = i;
+    }
+  }
+  cout << (c == 1 ? ans : -1) << '\n';
 }

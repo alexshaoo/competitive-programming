@@ -27,7 +27,18 @@ const int MOD = 1e9 + 7;
 int n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("breedflip");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> n;
+  string s, t;
+  cin >> s;
+  cin >> t;
+  bool same = true;
+  for (int i = 0; i < n; ++i) {
+    bool nxt = (s[i] == t[i]);
+    if (nxt && !same) ++ans;
+    same = nxt;
+  }
+  cout << ans << '\n';
 }

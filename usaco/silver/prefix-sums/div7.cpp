@@ -21,13 +21,35 @@ void setIO(string s) {
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
-const int MXN = 1e5 + 5;
+const int MXN = 5e5 + 5;
 const int MOD = 1e9 + 7;
 
 int n, ans = 0;
 
 int main() {
-  // setIO("");
+  setIO("div7");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cin >> n;
+  vector<int> arr(n);
+  for (int i = 0; i < n; ++i) {
+    cin >> arr[i];
+  }
+  vector<int> ps(n);
+  ps[0] = arr[0]%7;
+  for (int i = 1; i < n; ++i) {
+    ps[i] = (ps[i-1] + arr[i])%7;
+  }
+  
+  for (int i = 0; i < 7; ++i) {
+    int mn = MXN, mx = -1;
+    for (int j = 0; j < n; ++j) {
+      if (ps[j] == i) {
+        mn = min(mn, j);
+        mx = max(mx, j);
+      }
+    }
+    ans = max(ans, mx-mn);
+  }
+  cout << ans << '\n';
 }
