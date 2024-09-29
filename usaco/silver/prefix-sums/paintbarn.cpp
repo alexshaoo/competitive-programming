@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, size_t SIZE> void print(const T (&array)[SIZE]) {
-  for (size_t i = 0; i < SIZE; i++)
-    cout << array[i] << " ";
+template <typename T, size_t SIZE>
+void print(const T (&array)[SIZE]) {
+  for (size_t i = 0; i < SIZE; i++) cout << array[i] << " ";
   cout << '\n';
 }
 
-template <class ForwardIter> void print(ForwardIter begin, ForwardIter end) {
-  for (; begin != end; ++begin)
-    cout << *begin << " ";
+template <class ForwardIter>
+void print(ForwardIter begin, ForwardIter end) {
+  for (; begin != end; ++begin) cout << *begin << " ";
   cout << '\n';
 }
 
@@ -28,7 +28,7 @@ const int WIDTH = 200;
 const bool toggle = false;
 
 int main() {
-  // setIO("paintbarn");
+  setIO("paintbarn");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   int n, k, ans = 0;
@@ -73,28 +73,23 @@ int main() {
   auto sm = [&](int r1, int c1, int r2, int c2) {
     return ps[r2][c2] - ps[r1][c2] - ps[r2][c1] + ps[r1][c1];
   };
-  for (int lhs = 0; lhs <= 200; lhs++) {
-    for (int len = 1; lhs + len <= 200; len++) {
+  for (int x = 0; x <= 200; x++) {
+    for (int y = 1; x + y <= 200; y++) {
       int topSum = 0;
       int leftSum = 0;
       int rightSum = 0;
       int bottomSum = 0;
-
       for (int i = 1; i <= 200; i++) {
-        topSum = max(0, topSum + sm(i - 1, lhs, i, lhs + len));
+        topSum = max(0, topSum + sm(i - 1, x, i, x + y));
         above[i] = max(above[i], topSum);
         mx = max(mx, above[i]);
-
-        leftSum = max(0, leftSum + sm(lhs, i - 1, lhs + len, i));
+        leftSum = max(0, leftSum + sm(x, i - 1, x + y, i));
         left[i] = max(left[i], leftSum);
         mx = max(mx, left[i]);
-
-        rightSum = max(0, rightSum + sm(lhs, 200 - i, lhs + len, 200 - i + 1));
+        rightSum = max(0, rightSum + sm(x, 200 - i, x + y, 200 - i + 1));
         right[i] = max(right[i], rightSum);
         mx = max(mx, right[i]);
-
-        bottomSum =
-            max(0, bottomSum + sm(200 - i, lhs, 200 - i + 1, lhs + len));
+        bottomSum = max(0, bottomSum + sm(200 - i, x, 200 - i + 1, x + y));
         below[i] = max(below[i], bottomSum);
         mx = max(mx, below[i]);
       }
