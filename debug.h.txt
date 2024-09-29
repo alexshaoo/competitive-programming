@@ -1,0 +1,99 @@
+template <typename A, typename B>
+string to_string(pair<A, B> p);
+
+template <typename Head, typename... Tail>
+string to_string(tuple<Head, Tail...> t);
+
+string to_string(const string& s) { return '"' + s + '"'; }
+string to_string(const char* s) { return to_string((string) s); }
+string to_string(char c) { return string("'") + c + "'"; }
+string to_string(bool b) { return (b ? "true" : "false"); }
+
+string to_string(vector<bool> v) {
+  bool first = true;
+  string res = "{";
+  for (int i = 0; i < (int) v.size(); i++) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(v[i]);
+  }
+  res += "}";
+  return res;
+}
+
+template <size_t N>
+string to_string(bitset<N> v) {
+  string res = "";
+  for (size_t i = 0; i < N; i++) {
+    res += static_cast<char>('0' + v[i]);
+  }
+  return res;
+}
+
+template <typename A>
+string to_string(A v) {
+  bool first = true;
+  string res = "{";
+  for (const auto& x : v) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(x);
+  }
+  res += "}";
+  return res;
+}
+
+template <typename A, typename B>
+string to_string(pair<A, B> p) {
+  return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
+}
+
+template <int i, typename TupleType>
+string tuple_values(TupleType t) {
+  string s = "";
+  if constexpr (i > 0) {
+    s += tuple_values<i - 1, TupleType>(t);
+    s += ", ";
+  }
+  s += to_string(get<i>(t));
+  return s;
+}
+ 
+template <typename Head, typename... Tail>
+string to_string(tuple<Head, Tail...> t) {
+  using TupleType = tuple<Head, Tail...>;
+  const string s = tuple_values<tuple_size<TupleType>::value - 1, TupleType>(t);
+  return "(" + s + ")";
+}
+
+void debug_commas() {}
+
+template <typename Head, typename... Tail>
+void debug_commas(Head head, Tail... tail) {
+  // comma before each element
+  cerr << ", " << to_string(head);
+  debug_commas(tail...);
+}
+
+template <typename Head, typename... Tail>
+void debug_better(Head head, Tail... tail) {
+  // no comma before first element
+  cerr << "[" << to_string(head);
+  debug_commas(tail...);
+  cerr << "]" << endl;
+}
+
+// can't call debug with no arguments
+#ifdef _DEBUG
+#define debug(...)                      \
+  do {                                  \
+    cerr << "" << #__VA_ARGS__ << ": "; \
+    debug_better(__VA_ARGS__);          \
+  } while (0)
+#else
+#define debug(...) 42
+#endif
