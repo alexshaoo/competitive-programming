@@ -24,9 +24,20 @@ void solve() {}
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    solve();
+  int n, t;
+  cin >> n >> t;
+  vector<int> arr(n);
+  for (int i = 0; i < n; ++i) {
+    cin >> arr[i];
   }
+  int l = 0, ans = 0;
+  ll time = 0;
+  for (int r = 0; r < n; ++r) {
+    time += arr[r];
+    while (time > t) {
+      time -= arr[l++];
+    }
+    ans = max(ans, r - l + 1);
+  }
+  cout << ans << '\n';
 }

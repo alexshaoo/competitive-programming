@@ -19,7 +19,18 @@ void print(ForwardIter begin, ForwardIter end) {
 const int MAXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-void solve() {}
+void solve() {
+  ll n, x;
+  cin >> n >> x;
+  ll sm = 0;
+  vector<ll> arr(n);
+  for (ll i = 0; i < n; ++i) {
+    cin >> arr[i];
+    sm += arr[i];
+  }
+  sort(all(arr));
+  cout << max(arr[arr.size() - 1], ((sm + x - 1) / x)) << '\n';
+}
 
 int main() {
   ios_base::sync_with_stdio(0);

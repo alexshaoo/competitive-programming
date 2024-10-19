@@ -19,14 +19,30 @@ void print(ForwardIter begin, ForwardIter end) {
 const int MAXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-void solve() {}
-
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    solve();
+  int n, x;
+  cin >> n >> x;
+  vector<pair<int, int>> arr(n);
+  for (int i = 0; i < n; ++i) {
+    int a;
+    cin >> a;
+    arr[i] = {a, i + 1};
   }
+  sort(all(arr));
+  int l = 0, r = n - 1;
+  while (l < r) {
+    if (arr[l].first + arr[r].first == x) {
+      cout << arr[l].second << ' ' << arr[r].second << '\n';
+      return 0;
+    }
+    if (arr[l].first + arr[r].first > x) {
+      --r;
+    } else {
+      ++l;
+    }
+  }
+  cout << "IMPOSSIBLE" << '\n';
+  return 0;
 }

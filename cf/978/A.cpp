@@ -16,10 +16,8 @@ void print(ForwardIter begin, ForwardIter end) {
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
-const int MAXN = 1e5 + 5;
+const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
-
-void solve() {}
 
 int main() {
   ios_base::sync_with_stdio(0);
@@ -27,6 +25,19 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    solve();
+    int n, r;
+    cin >> n >> r;
+    vector<int> arr(n);
+    int together = 0;
+    int alone = 0;
+    for (int i = 0; i < n; ++i) {
+      cin >> arr[i];
+      together += (arr[i] / 2);
+      alone += (arr[i] % 2);
+    }
+    int ans = 2 * together;
+    int rem = 2 * (r - together);
+    ans += min(alone, rem - alone);
+    cout << ans << '\n';
   }
 }

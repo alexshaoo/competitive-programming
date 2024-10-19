@@ -16,10 +16,8 @@ void print(ForwardIter begin, ForwardIter end) {
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
-const int MAXN = 1e5 + 5;
+const int MAXN = 2e5 + 5;
 const int MOD = 1e9 + 7;
-
-void solve() {}
 
 int main() {
   ios_base::sync_with_stdio(0);
@@ -27,6 +25,24 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    solve();
+    int n, k;
+    cin >> n >> k;
+    vector<int> arr(n);
+    unordered_map<int, int> freq;
+    for (int i = 0; i < n; ++i) {
+      cin >> arr[i];
+      freq[arr[i]]++;
+    }
+    sort(all(arr));
+    ll ans = 0;
+    for (int i = 0; i < k; ++i) {
+      ans += freq[i];
+    }
+    ll window = ans;
+    for (int i = k; i <= min(k + arr[n - 1], MAXN); ++i) {
+      window = window + freq[i] - freq[i - k];
+      ans = max(ans, window);
+    }
+    cout << ans << '\n';
   }
 }

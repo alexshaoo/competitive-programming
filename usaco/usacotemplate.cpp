@@ -13,20 +13,19 @@ void print(ForwardIter begin, ForwardIter end) {
   cout << '\n';
 }
 
+void setIO(string s) {
+  freopen((s + ".in").c_str(), "r", stdin);
+  freopen((s + ".out").c_str(), "w", stdout);
+}
+
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
 const int MAXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
-void solve() {}
-
 int main() {
+  // setIO("");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int t;
-  cin >> t;
-  while (t--) {
-    solve();
-  }
 }

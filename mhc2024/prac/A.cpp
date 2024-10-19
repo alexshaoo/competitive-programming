@@ -28,4 +28,18 @@ int main() {
   // setIO("");
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  int T;
+  cin >> T;
+  for (int tc = 1; tc <= T; ++tc) {
+    int N, K;
+    cin >> N >> K;
+    ll mn = MOD;
+    for (int i = 0; i < N; ++i) {
+      ll n;
+      cin >> n;
+      mn = min(mn, n);
+    }
+    ll ans = max(1, 2 * N - 3) * mn;
+    cout << "Case #" << tc << ": " << (ans <= K ? "YES" : "NO") << '\n';
+  }
 }

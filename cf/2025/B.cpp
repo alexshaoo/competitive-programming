@@ -16,17 +16,30 @@ void print(ForwardIter begin, ForwardIter end) {
 #define ll long long
 #define all(x) (x).begin(), (x).end()
 
-const int MAXN = 1e5 + 5;
+const int MXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
-
-void solve() {}
 
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   int t;
   cin >> t;
-  while (t--) {
-    solve();
+  vector<int> arr(t);
+  for (int i = 0; i < t; ++i) {
+    int tmp;
+    cin >> tmp;
+  }
+  for (int i = 0; i < t; ++i) {
+    cin >> arr[i];
+    ll b = 2;
+    ll ans = 1;
+    while (arr[i] > 0) {
+      if (arr[i] % 2 == 1) {
+        ans = (b * ans) % MOD;
+      }
+      b = (b * b) % MOD;
+      arr[i] /= 2;
+    }
+    cout << ans << '\n';
   }
 }
