@@ -27,30 +27,29 @@ void solve() {
   auto f = [&](char a, char b, char c) -> bool {
     return (a == 'A') + (b == 'A') + (c == 'A') >= 2;
   };
-  vector<array<int, 2>> dp(n + 1);
-  dp[0][0] = 0;
+  vector<array<int, 3>> dp(n + 4);
   for (int i = 0; i < n; ++i) {
     if (i % 3 == 0) {
       dp[i + 3][0] =
           max(dp[i + 3][0], dp[i][0] + f(s[0][i], s[0][i + 1], s[0][i + 2]) +
                                 f(s[1][i], s[1][i + 1], s[1][i + 2]));
-      dp[i + 1][0] =
-          max(dp[i + 1][0], dp[i][0] + f(s[0][i], s[0][i + 1], s[1][i]));
       dp[i + 1][1] =
-          max(dp[i + 1][1], dp[i][1] + f(s[0][i], s[1][i], s[1][i + 1]));
+          max(dp[i + 1][1], dp[i][0] + f(s[0][i], s[0][i + 1], s[1][i]));
+      dp[i + 1][2] =
+          max(dp[i + 1][2], dp[i][0] + f(s[0][i], s[1][i], s[1][i + 1]));
     } else if (i % 3 == 1) {
-      if (i + 3 <= n) {
-        dp[i + 3][0] = max(dp[i + 3][0],
-                           dp[i][0] + f(s[0][i + 1], s[0][i + 2], s[0][i + 3]) +
+      if (i + 3 < n) {
+        dp[i + 3][1] = max(dp[i + 3][1],
+                           dp[i][1] + f(s[0][i + 1], s[0][i + 2], s[0][i + 3]) +
                                f(s[1][i], s[1][i + 1], s[1][i + 2]));
-        dp[i + 3][1] =
-            max(dp[i + 3][1], dp[i][1] + f(s[0][i], s[0][i + 1], s[0][i + 2]) +
+        dp[i + 3][2] =
+            max(dp[i + 3][2], dp[i][2] + f(s[0][i], s[0][i + 1], s[0][i + 2]) +
                                   f(s[1][i + 1], s[1][i + 2], s[1][i + 3]));
       }
       dp[i + 2][0] =
-          max(dp[i + 2][0], dp[i][0] + f(s[0][i + 1], s[1][i], s[1][i + 1]));
+          max(dp[i + 2][0], dp[i][1] + f(s[0][i + 1], s[1][i], s[1][i + 1]));
       dp[i + 2][0] =
-          max(dp[i + 2][0], dp[i][1] + f(s[0][i], s[0][i + 1], s[1][i + 1]));
+          max(dp[i + 2][0], dp[i][2] + f(s[0][i], s[0][i + 1], s[1][i + 1]));
     }
   }
   cout << dp[n][0] << '\n';
