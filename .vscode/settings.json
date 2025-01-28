@@ -55,7 +55,32 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "ostream": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "array": "cpp",
+    "chrono": "cpp",
+    "deque": "cpp",
+    "iterator": "cpp",
+    "list": "cpp",
+    "vector": "cpp",
+    "xhash": "cpp",
+    "xtree": "cpp",
+    "filesystem": "cpp",
+    "generator": "cpp",
+    "format": "cpp",
+    "forward_list": "cpp",
+    "initializer_list": "cpp",
+    "ranges": "cpp",
+    "regex": "cpp",
+    "span": "cpp",
+    "stacktrace": "cpp",
+    "valarray": "cpp",
+    "xstring": "cpp",
+    "xutility": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "string_view": "cpp",
+    "text_encoding": "cpp"
   },
   "files.watcherExclude": {
     "**/target": true

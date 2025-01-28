@@ -13,11 +13,14 @@ void print(ForwardIter begin, ForwardIter end) {
   cout << '\n';
 }
 
-#define ull unsigned long long
-#define ll long long
-#define all(x) (x).begin(), (x).end()
+#define all(x) begin(x), end(x)
+#define sz(x) (int)(x).size()
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int, int> pii;
+typedef vector<int> vi;
 
-const int MAXN = 1e5 + 5;
+const int MAXN = 3e5 + 5;
 const int MOD = 1e9 + 7;
 
 int main() {
@@ -25,45 +28,59 @@ int main() {
   cin.tie(0);
   int n;
   cin >> n;
-  vector<int> a(n);
+  vector<ll> a(n), ps(n + 1), psps(n + 2);
   for (int i = 0; i < n; ++i) {
     cin >> a[i];
+    ps[i + 1] = ps[i] + a[i];
   }
-  vector<int> sm(n);
-  sm[n - 1] = a[n - 1];
-  for (int i = n - 2; i >= 0; --i) {
-    sm[i] = sm[i + 1] + (n - i) * a[i];
+  for (int i = 0; i <= n; ++i) {
+    psps[i + 1] = psps[i] + ps[i];
   }
-  vector<int> lb(n), rb(n);
-  int le = 1, ri = n;
+  vector<ll> bs(n), bsps(n + 1);  // sum of each 'block'
   for (int i = 0; i < n; ++i) {
-    lb[i] = le;
-    rb[i] = ri;
-    le = ri + 1;
-    ri += (n - i - 1);
+    bs[i] = psps[n + 1] - psps[i + 1] - (n - i) * ps[i];
+    bsps[i + 1] = bsps[i] + bs[i];
   }
-  // for (int i = 0; i < n; ++i) {
-  // cout << bounds[i].first << ' ' << bounds[i].second << '\n';
+  // print(all(psps));
+  // print(all(bs));
+  // auto sum = [&](int ind) -> ll {
+  // int block = 1;
+  // int size = n;
+  // while (ind > size) {
+  // ind -= size--;
+  // ++block;
   // }
+  // int mult = ind;
+  // ll sum = 0;
+  // for (int i = 0; i < ind; ++i) {
+  // sum += a[i + block] * mult--;
+  // }
+  // return blockps[block - 1] + sum;
+  // };
+  auto sum = [&](ll X) -> ll {
+    ll s = 0;
+    ll e = n;
+    while (s + 1 < e) {
+      ll m = (s + e) / 2;
+      ll lcnt = ll(m) * ll(n + n - (m - 1)) / 2;
+      // cout << n + n - (m - 1) << ' ';
+      if (X >= lcnt) {
+        s = m;
+      } else {
+        e = m;
+      }
+    }
+    cout << s << ' ';
+    ll lcnt = ll(s) * ll(n + n - (s - 1)) / 2;
+    ll nleft = X - lcnt;
+    return bsps[s] + psps[s + 1 + nleft] - psps[s + 1] - nleft * ps[s];
+  };
   int q;
   cin >> q;
   while (q--) {
-    ull l, r;
+    int l, r;
     cin >> l >> r;
-    int li = upper_bound(all(lb), l) - lb.begin() - 1;
-    int ri = upper_bound(all(rb), r) - rb.begin() - 1;
-    cout << li << ' ' << ri << '\n';
-    ull ans = 0;
-    for (int i = li; i <= ri; ++i) {
-      ans += sm[i];
-    }
-    for (int i = l - lb[li]; i > 0; --i) {
-      ans -= a[li++] * i;
-    }
-    
-    for (int i = r - rb[ri]; i > 0; --i) {
-      ans += a[ri++] * i;
-    }
-    cout << ans << '\n';
+    // cout << sr << ' ' << sl << '\n';
+    cout << sum(r) - sum(l - 1) << '\n';
   }
 }
