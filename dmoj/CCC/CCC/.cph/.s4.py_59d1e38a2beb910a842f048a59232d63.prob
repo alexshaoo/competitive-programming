@@ -1,0 +1,1 @@
+{"name":"Local: s4","url":"c:\\Users\\alexs\\DMOJ\\CCC\\'21\\s4.py","tests":[{"id":1640179564023,"input":"4 3 3\n1 2\n3 4\n4 1\n1 4 3 2\n3 4\n4 2\n3 2","output":"1\n2\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\alexs\\DMOJ\\CCC\\'21\\s4.py","group":"local","local":true}

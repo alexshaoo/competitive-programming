@@ -1,0 +1,79 @@
+{
+  "templates": [
+    {
+      "duration": "120",
+      "contestTitle": "Do you like cat?",
+      "name": "example",
+      "problemConditions": [
+        {
+          "difficult": [
+            "800",
+            "900",
+            "1000"
+          ],
+          "good": null,
+          "bad": [
+            "interactive"
+          ]
+        },
+        {
+          "difficult": [
+            "1000",
+            "1100",
+            "1200"
+          ],
+          "good": null,
+          "bad": [
+            "interactive"
+          ]
+        },
+        {
+          "difficult": [
+            "1200",
+            "1300",
+            "1400",
+            "1500",
+            "1600"
+          ],
+          "good": null,
+          "bad": null
+        },
+        {
+          "difficult": [
+            "1600",
+            "1700",
+            "1800",
+            "1900"
+          ],
+          "good": null,
+          "bad": null
+        },
+        {
+          "difficult": [
+            "2000",
+            "2100",
+            "2200",
+            "2300",
+            "2400"
+          ],
+          "good": null,
+          "bad": null
+        },
+        {
+          "difficult": [
+            "2500",
+            "2600",
+            "2700",
+            "2800"
+          ],
+          "good": null,
+          "bad": null
+        }
+      ],
+      "banProblems": [
+        "1A",
+        "12B"
+      ]
+    }
+  ]
+}
