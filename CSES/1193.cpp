@@ -24,30 +24,39 @@ int main() {
       }
     }
   }
-  const array<tuple<int, int, string>, 4> dirs = {
-      make_tuple(-1, 0, "U"), make_tuple(1, 0, "D"), make_tuple(0, -1, "L"),
-      make_tuple(0, 1, "R")};
+  const vector<pair<int, int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  string paths = "UDLR";
   vector<vector<bool>> visited(n, vector<bool>(m, false));
+  vector<vector<int>> pre(n, vector<int>(m, -1));
   auto bounds = [&](int r, int c) {
     return (r >= 0 && r < n && c >= 0 && c < m);
   };
-  queue<tuple<int, int, string>> q;  // r, c, path
-  q.push({sr, sc, ""});
+  queue<pair<int, int>> q;  // r, c
+  q.push({sr, sc});
+  visited[sr][sc] = true;
   while (!q.empty()) {
-    auto [r, c, path] = q.front();
+    auto [r, c] = q.front();
     q.pop();
-    for (auto [dr, dc, dpath] : dirs) {
-      int nr = r + dr, nc = c + dc;
-      string npath = path + dpath;
+    for (int d = 0; d < 4; ++d) {
+      int nr = r + dirs[d].first, nc = c + dirs[d].second;
       if (bounds(nr, nc) && grid[nr][nc] != '#' && !visited[nr][nc]) {
+        visited[nr][nc] = true;
+        q.push({nr, nc});
+        pre[nr][nc] = d;
         if (nr == er && nc == ec) {
+          string path;
+          while (nr != sr || nc != sc) {
+            int i = pre[nr][nc];
+            path += paths[i];
+            nr -= dirs[i].first;
+            nc -= dirs[i].second;
+          }
+          reverse(all(path));
           cout << "YES" << '\n';
-          cout << sz(npath) << '\n';
-          cout << npath << '\n';
+          cout << sz(path) << '\n';
+          cout << path << '\n';
           return 0;
         }
-        visited[nr][nc] = true;
-        q.push({nr, nc, npath});
       }
     }
   }
