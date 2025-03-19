@@ -24,13 +24,10 @@ int main() {
       }
     }
   }
-  const vector<pair<int, int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  vector<pair<int, int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
   string paths = "UDLR";
   vector<vector<bool>> visited(n, vector<bool>(m, false));
   vector<vector<int>> pre(n, vector<int>(m, -1));
-  auto bounds = [&](int r, int c) {
-    return (r >= 0 && r < n && c >= 0 && c < m);
-  };
   queue<pair<int, int>> q;  // r, c
   q.push({sr, sc});
   visited[sr][sc] = true;
@@ -39,10 +36,11 @@ int main() {
     q.pop();
     for (int d = 0; d < 4; ++d) {
       int nr = r + dirs[d].first, nc = c + dirs[d].second;
-      if (bounds(nr, nc) && grid[nr][nc] != '#' && !visited[nr][nc]) {
+      if (nr >= 0 && nr < n && nc >= 0 && nc < m && grid[nr][nc] != '#' &&
+          !visited[nr][nc]) {
         visited[nr][nc] = true;
-        q.push({nr, nc});
         pre[nr][nc] = d;
+        q.push({nr, nc});
         if (nr == er && nc == ec) {
           string path;
           while (nr != sr || nc != sc) {
