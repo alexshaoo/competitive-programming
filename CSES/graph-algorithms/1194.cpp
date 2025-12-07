@@ -10,96 +10,89 @@ int main() {
   cin.tie(0);
   int n, m;
   cin >> n >> m;
-  vector<int> tmp = {0, 1, 0, -1, 0};
-  string dirs = "RDLU";
-  unordered_map<char, pair<int, int>> dirDelta;
-  for (int i = 0; i < 4; ++i) {
-    dirDelta[dirs[i]] = {tmp[i], tmp[i + 1]};
-  }
-  unordered_map<char, char> oppDir;
-  for (int i = 0; i < 4; ++i) {
-    oppDir[dirs[i]] = dirs[(i + 2) % 4];
-  }
+  vector<pair<int, int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+  string dirChars = "RDLU";
   vector<string> grid(n);
-  queue<array<int, 3>> q, mq; // my queue, monster Q, {row, col, time}
+  int sr = -1, sc = -1;
+  queue<pair<int, int>> mq;
   for (int i = 0; i < n; ++i) {
     cin >> grid[i];
     for (int j = 0; j < m; ++j) {
       if (grid[i][j] == 'M')
-        mq.push({i, j, 0});
-      else if (grid[i][j] == 'A')
-        q.push({i, j, 0});
+        mq.push({i, j});
+      else if (grid[i][j] == 'A') {
+        sr = i;
+        sc = j;
+      }
     }
   }
-  vector<vector<char>> par(n, vector<char>(m, '?'));
-  vector<vector<int>> monsterTime(n, vector<int>(m, INT_MAX));
-  auto check = [&](int r, int c) {
-    return r >= 0 && r < n && c >= 0 && c < m && grid[r][c] != '#';
-  };
+  // bfs monster
+  vector<vector<int>> monsterDist(n, vector<int>(m, INT_MAX));
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
       if (grid[i][j] == 'M')
-        monsterTime[i][j] = 0;
+        monsterDist[i][j] = 0;
     }
   }
   while (!mq.empty()) {
-    auto [r, c, time] = mq.front();
+    auto [r, c] = mq.front();
     mq.pop();
-    for (char dir : dirs) {
-      auto [dr, dc] = dirDelta[dir];
-      int nr = r + dr, nc = c + dc;
-      if (check(nr, nc) && time + 1 < monsterTime[nr][nc]) {
-        monsterTime[nr][nc] = time + 1;
-        mq.push({nr, nc, time + 1});
+    for (int d = 0; d < 4; ++d) {
+      int nr = r + dirs[d].first, nc = c + dirs[d].second;
+      if (nr >= 0 && nr < n && nc >= 0 && nc < m && grid[nr][nc] != '#' &&
+          monsterDist[r][c] + 1 < monsterDist[nr][nc]) {
+        monsterDist[nr][nc] = monsterDist[r][c] + 1;
+        mq.push({nr, nc});
       }
     }
   }
-  vector<vector<int>> myTime(n, vector<int>(m, INT_MAX));
-  auto [sr, sc, st] = q.front();
-  myTime[sr][sc] = 0;
+  // my bfs
+  vector<vector<int>> myDist(n, vector<int>(m, INT_MAX)),
+      parent(n, vector<int>(m, -1));
+  queue<pair<int, int>> q;
+  q.push({sr, sc});
+  myDist[sr][sc] = 0;
   while (!q.empty()) {
-    auto [r, c, time] = q.front();
+    auto [r, c] = q.front();
     q.pop();
-    for (char dir : dirs) {
-      auto [dr, dc] = dirDelta[dir];
-      int nr = r + dr, nc = c + dc;
-      if (check(nr, nc) && time + 1 < monsterTime[nr][nc] && myTime[nr][nc] == INT_MAX) {
-        myTime[nr][nc] = time + 1;
-        par[nr][nc] = oppDir[dir];
-        q.push({nr, nc, time + 1});
+    for (int d = 0; d < 4; ++d) {
+      int nr = r + dirs[d].first, nc = c + dirs[d].second;
+      if (nr >= 0 && nr < n && nc >= 0 && nc < m && grid[nr][nc] != '#' &&
+          myDist[r][c] + 1 < monsterDist[nr][nc] && myDist[nr][nc] == INT_MAX) {
+        myDist[nr][nc] = myDist[r][c] + 1;
+        parent[nr][nc] = d;
+        q.push({nr, nc});
       }
     }
   }
-  auto found = [&](int r, int c) {
-    cout << "YES\n";
-    int cr = r, cc = c;
-    string path;
-    while (par[cr][cc] != '?') {
-      char dir = par[cr][cc];
-      path.push_back(oppDir[dir]);
-      auto [dr, dc] = dirDelta[dir];
-      cr += dr;
-      cc += dc;
-    }
-    reverse(all(path));
-    cout << path.length() << '\n';
-    cout << path << '\n';
-  };
-  for (int r : {0, n - 1}) {
-    for (int c = 0; c < m; ++c) {
-      if (myTime[r][c] != INT_MAX && myTime[r][c] < monsterTime[r][c]) {
-        found(r, c);
-        return 0;
+  // check boundary cells
+  int er = -1, ec = -1;
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      if ((i == 0 || i == n - 1 || j == 0 || j == m - 1) &&
+          myDist[i][j] < monsterDist[i][j]) {
+        er = i;
+        ec = j;
+        break;
       }
     }
+    if (er != -1)
+      break;
   }
-  for (int c : {0, m - 1}) {
-    for (int r = 0; r < n; ++r) {
-      if (myTime[r][c] != INT_MAX && myTime[r][c] < monsterTime[r][c]) {
-        found(r, c);
-        return 0;
-      }
-    }
+  if (er == -1) {
+    cout << "NO\n";
+    return 0;
   }
-  cout << "NO\n";
+  cout << "YES\n";
+  string path;
+  int cr = er, cc = ec;
+  while (cr != sr || cc != sc) {
+    int d = parent[cr][cc];
+    path += dirChars[d];
+    cr -= dirs[d].first;
+    cc -= dirs[d].second;
+  }
+  reverse(all(path));
+  cout << sz(path) << '\n';
+  cout << path << '\n';
 }
