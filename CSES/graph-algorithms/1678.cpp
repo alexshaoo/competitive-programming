@@ -4,26 +4,29 @@ using namespace std;
 #define all(x) begin(x), end(x)
 #define sz(x) (int)(x).size()
 typedef long long ll;
+const int MAXN = 1e5 + 5, MAXM = 2e5 + 5;
 
+vector<vector<int>> adj(MAXN);
+vector<int> vis(MAXN, 0);
+vector<int> par(MAXN, 0);
 int l = -1, r = -1;
 
-void dfs(vector<vector<int>> &adj, vector<int> &vis, vector<int> &par, int u) {
+bool dfs(int u) {
   vis[u] = 1;
   for (int v : adj[u]) {
-    if (l != -1)
-      return;
     if (vis[v] == 1) { // found
       l = v;
       r = u;
-      return;
+      return true;
+
     } else if (vis[v] == 0) { // unexplored
       par[v] = u;
-      dfs(adj, vis, par, v);
-      if (l != -1)
-        return;
+      if (dfs(v))
+        return true;
     }
   }
   vis[u] = 2;
+  return false;
 }
 
 int main() {
@@ -31,18 +34,13 @@ int main() {
   cin.tie(0);
   int n, m;
   cin >> n >> m;
-  vector<vector<int>> adj(n + 1);
   for (int i = 0; i < m; ++i) {
     int u, v;
     cin >> u >> v;
     adj[u].push_back(v);
   }
-  vector<int> q;
-  vector<int> vis(n + 1, 0);
-  vector<int> par(n + 1, 0);
   for (int u = 1; u <= n; ++u) {
-    dfs(adj, vis, par, u);
-    if (l != -1)
+    if (!vis[u] && dfs(u))
       break;
   }
   if (l == -1) {
@@ -58,5 +56,4 @@ int main() {
   cout << sz(cycle) << '\n';
   for (int u : cycle)
     cout << u << ' ';
-  cout << '\n';
 }
