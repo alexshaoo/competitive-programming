@@ -35,6 +35,12 @@
 *.out
 *.app
 
+# Ignore compiled executables without extensions (in all subdirectories)
+# This ignores files like CSES/sorting-and-searching/1074
+*
+!*/
+!*.*
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
