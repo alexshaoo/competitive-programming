@@ -10,26 +10,16 @@ int main() {
   cin.tie(0);
   int n;
   cin >> n;
-  map<int, int> freq;
+  vector<int> v;
   while (n--) {
     int x;
     cin >> x;
-    auto it = freq.upper_bound(x);
-    if (it == freq.end()) {
-      freq[x]++;
+    if (v.empty() || x >= v.back()) {
+      v.push_back(x);
     } else {
-      int currIndex = (*it).first;
-      if (freq[currIndex] > 0) {
-        freq[currIndex]--;
-        if (freq[currIndex] == 0)
-          freq.erase(currIndex);
-      }
-      freq[x]++;
+      auto it = upper_bound(all(v), x);
+      *it = x;
     }
   }
-  int cnt = 0;
-  for (auto &[_, v] : freq) {
-    cnt += v;
-  }
-  cout << cnt << '\n';
+  cout << v.size() << '\n';
 }
