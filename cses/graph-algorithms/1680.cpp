@@ -5,6 +5,8 @@ using namespace std;
 #define sz(x) (int)(x).size()
 typedef long long ll;
 
+const int MIN = -1e9;
+
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
@@ -32,10 +34,10 @@ int main() {
     }
     topOrder.push_back(u);
   }
-  vector<int> dp(n + 1, INT_MIN), par(n + 1, -1);
+  vector<int> dp(n + 1, MIN), par(n + 1, -1);
   dp[1] = 1;
   for (int u : topOrder) {
-    if (dp[u] != INT_MIN) {
+    if (dp[u] != MIN) {
       for (int v : adj[u]) {
         if (dp[v] < dp[u] + 1) {
           dp[v] = dp[u] + 1;
@@ -44,7 +46,7 @@ int main() {
       }
     }
   }
-  if (dp[n] == INT_MIN) {
+  if (dp[n] == MIN) {
     cout << "IMPOSSIBLE" << '\n';
     return 0;
   }
