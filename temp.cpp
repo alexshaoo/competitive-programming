@@ -40,6 +40,15 @@ int main() {
       }
     }
     cout << f[n] << '\n';
+    int test1 = 1;
+    test1 = 2;
+    cout << test1 << '\n';
+    int test2 = 1;
+    test2 = 2;
+    cout << test2 << '\n';
+    int test3 = 1;
+    test3 = 2;
+    cout << test3 << '\n';
   }
   return 0;
 }
