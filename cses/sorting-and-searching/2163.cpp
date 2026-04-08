@@ -31,6 +31,4 @@ int main() {
     cout << blocks[bi][p] << ' ';
     blocks[bi].erase(blocks[bi].begin() + p);
   }
-
-  cout << '\n';
 }
