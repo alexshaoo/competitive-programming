@@ -5,7 +5,7 @@ using namespace std;
 #define sz(x) (int)(x).size()
 typedef long long ll;
 
-const int JUMP_LIMIT = 17;
+const int JUMP_LIMIT = 20;
 
 struct DSU {
   vector<int> par;
@@ -49,26 +49,39 @@ int main() {
     dsu.unite(i + 1, t);
   }
 
-  vector<int> state(n + 1, 0), depth(n + 1, 0);
+  vector<int> state(n + 1, 0), depth(n + 1, -1);
   vector<int> cycleSize(n + 1, -1), cyclePos(n + 1, -1);
-  auto dfs = [&](this auto &self, int curr) -> void {
+  auto dfs = [&](auto &self, int curr) -> void {
     state[curr] = 1;
-    int nxt = destinations[curr];
+    int nxt = destinations[curr - 1];
     if (state[nxt] == 0) {
-      self(nxt);
+      self(self, nxt);
     } else if (state[nxt] == 1) { // cycle detected
-      depth[curr] = 0;
+      int size = 0;
       int tmp = nxt;
-      while (tmp != curr) {
+      do {
+        ++size;
+        tmp = destinations[tmp - 1];
+      } while (tmp != nxt);
+      tmp = nxt;
+      int pos = 0;
+      do {
         depth[tmp] = 0;
-        tmp = destinations[tmp];
-      }
+        cycleSize[tmp] = size;
+        cyclePos[tmp] = pos++;
+        tmp = destinations[tmp - 1];
+      } while (tmp != nxt);
     }
-    if (state[nxt] == 2) {
+    if (state[nxt] == 2 && depth[curr] == -1) {
       depth[curr] = depth[nxt] + 1;
     }
     state[curr] = 2;
   };
+
+  for (int i = 1; i <= n; ++i) {
+    if (state[i] == 0)
+      dfs(dfs, i);
+  }
 
   // taken from planet queries I, problem 1750
   // dp[i][j] is planet you end up on from planet i with j jumps
@@ -83,23 +96,41 @@ int main() {
     }
   }
 
+  auto jump = [&](int node, int steps) {
+    for (int i = 0; i < JUMP_LIMIT; ++i) {
+      if (steps & (1 << i)) {
+        node = dp[node][i];
+      }
+    }
+    return node;
+  };
+
+  // functional/successor graph
   while (q--) {
     int a, b;
     cin >> a >> b;
     // a, b not in same component
-    if (dsu.find(a) != dsu.find(b))
+    if (dsu.find(a) != dsu.find(b)) {
       cout << "-1" << '\n';
+      continue;
+    }
     // b in cycle
     if (depth[b] == 0) {
-      int sz = cycleSize[b];
-      cout << depth[a] + (cyclePos[b] - cyclePos[a] + sz) % sz << '\n';
+      int rootA = jump(a, depth[a]);
+      int size = cycleSize[b];
+      cout << depth[a] + (cyclePos[b] - cyclePos[rootA] + size) % size << '\n';
+      continue;
     }
-    // b in same tree as a, closer to cycle
     // NOT (b in same tree as a, closer to cycle)
-    // for (int b = 0; b <= 30; ++b) {
-    // for (int b = 0; b <= 30; ++b) {
-    //   if (k & (1 << b))
-    //     x = dp[x][b];
-    // }
+    if (depth[a] < depth[b]) {
+      cout << "-1" << '\n';
+    } else {
+      int dist = depth[a] - depth[b];
+      if (jump(a, dist) == b)
+        cout << dist;
+      else
+        cout << "-1";
+      cout << '\n';
+    }
   }
 }
